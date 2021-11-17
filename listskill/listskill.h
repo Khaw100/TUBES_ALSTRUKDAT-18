@@ -7,6 +7,7 @@
 #define listskill_H
 
 #include "boolean.h"
+#include <time.h>
 
 #define Nil NULL
 
@@ -141,7 +142,7 @@ void PrintBackward (Listskill L);
 /* Jika list kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 
-int rskill (Listskill *L);
+int rskill (time_t t);
 // fungsi ini digunakan untuk mendapatkan skill di setiap awal gilirannya
 
 int NbElmt (Listskill L);

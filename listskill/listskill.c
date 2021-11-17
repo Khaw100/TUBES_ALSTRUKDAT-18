@@ -289,15 +289,8 @@ void PrintBackward (Listskill L){
 
 
 
-int rskill (Listskill *L){ // 0-9
-    int r, skill; 
-    time_t t;
-    srand(time(NULL));
-    for (int i = 0; i<10 ; i++){
-        r = rand() % 10;
-        printf("%d \n", r);
-    }        
-    return r;
+int rskill (time_t t){ // 0-9
+    return rand() % 10;
 }
 
 int NbElmt (Listskill L){
