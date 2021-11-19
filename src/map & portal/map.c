@@ -1,12 +1,18 @@
 #include "map.h"
+#include "mesin_kar.h"
+#include "mesin_kata.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-void createMap (MAP *M, int n) {
+void createEmptyMap (MAP *M ){
     /*KAMUS LOKAL*/
 
     /*ALGORITMA*/
-    (*M).nEff = n;
+    (*M).nEff = 0;
+}
+
+void loadMap (){
+    ;
 }
 
 void displayMap (MAP M){
@@ -26,36 +32,28 @@ void copyMap (MAP M1, MAP M2){
 
     /*ALGORITMA*/
     i = 0;
-    createMap(&M2,Length(M1));
+    createEmptyMap(&M2);
     for (i; i<=Length(M1);i++) {
         M2.contents[i] = M1.contents[i];
     }
 }
 
 boolean IsPortalEmpty (Portal P) {
-    return (P.row == 0 ) && (P.col == 0 );
+    return (P.Neff = 0 );
 }
 
-void createPortal (Portal *P, int n) {
+void createEmptyPortal (Portal *P) {
     /*KAMUS LOKAL*/
 
     /*ALGORITMA*/
-    (*P).row = n;
-    (*P).col = 2;
+    (*P).Neff = 0;
 }
 
-
-void deployPortal (Portal P, int wayIn, int wayOut){
+void setPortal(Portal P, int n) {
     /*KAMUS LOKAL*/
-    
+    int i;
     /*ALGORITMA*/
-    if (IsPortalEmpty(P)) {
-        P.contents[P.row][0] = wayIn;
-        P.contents[P.row][1] = wayOut;
-    }
-    else {
-        P.contents[P.row+1][0] = wayIn;
-        P.contents[P.row+1][1] = wayOut;
+    for(i=0;i<P.Neff+1;i++){
+        P.contents[i] = -1;
     }
 }
-
