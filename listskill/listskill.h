@@ -42,7 +42,7 @@ boolean IsEmpty (Listskill L);
 /* Mengirim true jika list kosong. Lihat definisi di atas. */
 
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty (Listskill *L);
+void CreateEmptySkill (Listskill *L);
 /* I.S. L sembarang  */
 /* F.S. Terbentuk list kosong. Lihat definisi di atas. */
 

@@ -1,41 +1,34 @@
 /* File : pemain.c */
 
-#include "playerr.h"
+#include "player.h"
 #include "listskill.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "map.h"
 
 /*** Konstruktor Player ***/
-void CreatePlayer (ArrayP *P)
+void CreateEmptyPlayer (ArrayP *P)
 {
     /* ALGORITMA */
     (*P).Neff = Nil;
 }
 
-void inputPlayerName (ArrayP P, int i) {
+ArrayP inputPlayer (ArrayP P, int i) 
+{
+    Listskill S;
+    CreateEmptySkill(&S);
     char namaPlayer;
     scanf("%s", &namaPlayer);
     P.contents[i].playerName = namaPlayer;
+    BuffCerminPengganda(P) = false;
+    BuffImunitas(P) = false;
+    BuffPembesarHoki(P) = false;
+    BuffPengecilHoki(P) = false;
+    P.contents[i].skill = S;
+    P.contents[i].position = 1;
+
+    return P;
 }
-
-// address newPlayer (infotype x)
-// {   Listskill L;
-//     /* ALGORITMA */
-//     Player *P = (Player *)malloc(sizeof(Player));
-//     if (P != Nil) {
-//         kodePlayer(P) = x;
-//         inputPlayer(&P);
-//         CreateEmpty(&L); // pk fungsi createskill
-//         playerBuff(P) = false; // inisialisasi satu2
-//         position(P) = 0; 
-//         return P;
-//         // NextPlayer(*P) = Nil; // nextplayer
-//     } else {
-//         return Nil; 
-//     }
-// }
-
 
 void PrintSkill (Listskill S)
 {   
