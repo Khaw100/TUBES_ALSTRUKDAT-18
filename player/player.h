@@ -2,92 +2,63 @@
 #define player_H
 
 #include "boolean.h"
+#include "listskill.h"
 
 #define Nil NULL
-#define MAX_Length 4
+
+#define Max_length 4
+
+
 
 typedef int infotype;
-typedef char ElTypeBuff;
-
-typedef struct tElmtSkill *address;
-typedef struct tElmtSkill {
-	char skillName[20];
-	address nextSkill;
-} ElmtSkill;
-typedef struct {
-	address FirstSkill;
-	address LastSkill;
-} ListSkill;
 
 typedef struct {
-	ElTypeBuff contents [MAX_Length];
-	int Neff;
+    boolean isImun;
+    boolean isCerminPengganda;
+    boolean isSenterPembesar; 
+    boolean isSenterPengecil;
 } Buff;
 
-typedef struct tElmtplayer *address;
-typedef struct tElmtplayer { 
-	infotype kodePlayer;
-	char playerName[20]; // nama
-	ListSkill skill;  // listskill hrsny
-	Buff playerbuff;  // buff yang dimiliki player 
-	address nextPlayer;
-} ElmtPlayer;
-typedef struct {
-	address FirstPlayer;
-	address LastPlayer;
+typedef struct tPlayer *address;
+
+typedef struct tPlayer {
+    // infotype kodePlayer;
+	char playerName; // nama
+	Listskill skill;  // listskill hrsny
+	Buff playerBuff;  // buff yang dimiliki player 
+    int position;
+    //address nextPlayer;
 } Player;
 
+typedef struct {
+    Player contents [Max_length];
+    int Neff;
+} ArrayP;
 
-#define FirstSkill(S) (S).FirstSkill
-#define LastSkill(S) (S).LastSkill
-#define FirstPlayer(P) (P).FirstPlayer
-#define LastPlayer(P) (P).LastPlayer
-#define skillName(S) (S)->skillName[20]
+#define Length(P) (P).Neff
 #define nextSkill(S) (S)->nextSkill
-#define kodePlayer(P) (P)->kodePlayer
-#define playerName(P) (P)->playerName[20]
+#define kodePlayer(P) (P).kodePlayer
+#define playerName(P) (P).playerName
 #define skill(S) (S)->skill
-#define playerBuff(P) (P)->playerBuff
-#define nextPlayer(P) (P)->nextPlayer
-#define Length(B) (B).Neff
-
+#define BuffImunitas(P) (P).playerBuff.isimun
+#define BuffCerminPengganda(P) (P).playerBuff.iscerminpengganda
+#define BuffPembesarHoki(P) (P).playerBuff.ispembesarhoki
+#define BuffPengecilHoki(P) (P).playerBuff.ispengecilhoki
+#define position(P) (P).position
+#define FirstPlayer(P) (P).firstPlayer
+// #define NextPlayer(P) (P).nextPlayer
 
 /*** Konstruktor Player ***/
 void CreatePlayer (Player *P);
 
-address newPlayer ();
+void inputPlayerName (Player *P);
 
-/*** Konstruktor Skill ***/
-void CreateListSkill (ListSkill *S);
-/* */
+// address newPlayer (infotype X);
 
-address newSkill ();
+void PrintSkill (Listskill S);
 
-/*** PENCARIAN SEBUAH ELEMEN LIST ***/
-address SearchPemain (Player P, infotype X);
-/* Mencari apakah ada elemen list dengan info(P)= X */
-/* Jika ada, mengirimkan address elemen tersebut. */
-/* Jika tidak ada, mengirimkan Nil */
+void MovePlayer (Player *P, int n);
 
-/*** Lain-lain ***/
-void UpdateSkill (ListSkill S, infotype X);
-/* Menambahkan skill baru seorang pemain */
 
-int NbSkill (ListSkill S, infotype X);
-/* Mengirimkan banyaknya skill yang dimiliki oleh seorang pemain. */
-
-void PrintSkill (ListSkill S, infotype X);
-
-void MovePlayer ();
-
-boolean isBuffEmpty (Buff B);
-
-void CreateEmptyBuff (Buff *B);
-
-void PrintBuff (Buff B, infotype X);
 
 #endif
-
-
-
-// buff itu bagusnya boolean aja true/false.. nanti di main nya tinggal lihat kurleb kayak if player1.buff.pembesar hoki == True

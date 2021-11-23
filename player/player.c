@@ -1,130 +1,87 @@
 /* File : pemain.c */
 
-#include "player.h"
-#include "listskill.c"
+#include "playerr.h"
+#include "listskill.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "map.h"
 
 /*** Konstruktor Player ***/
-void CreatePlayer (Player *P)
+void CreatePlayer (ArrayP *P)
 {
     /* ALGORITMA */
-    FirstPlayer(*P) = Nil;
+    (*P).Neff = Nil;
 }
 
-void inputPlayer (Player *P, int n) {
-    address P;
-    CreatePlayer(&P);
-    P = FirstPlayer(*P);
-    address NP;
-    for (int i = 1; i <= n; i++) {
-        NP = newPlayer();
-        P = NP;
-        printf("Nama Player ke %d: ", n);
-        scanf("%s", &(playerName(P)));
-        P = NEXT(P);
-    }
-    P = FirstPlayer(*P);
+void inputPlayerName (ArrayP P, int i) {
+    char namaPlayer;
+    scanf("%s", &namaPlayer);
+    P.contents[i].playerName = namaPlayer;
 }
 
-address newPlayer ()
+// address newPlayer (infotype x)
+// {   Listskill L;
+//     /* ALGORITMA */
+//     Player *P = (Player *)malloc(sizeof(Player));
+//     if (P != Nil) {
+//         kodePlayer(P) = x;
+//         inputPlayer(&P);
+//         CreateEmpty(&L); // pk fungsi createskill
+//         playerBuff(P) = false; // inisialisasi satu2
+//         position(P) = 0; 
+//         return P;
+//         // NextPlayer(*P) = Nil; // nextplayer
+//     } else {
+//         return Nil; 
+//     }
+// }
+
+
+void PrintSkill (Listskill S)
+{   
+    printskill(S);
+}
+
+void MovePlayer (ArrayP *P, int ndadu, MAP M, int i) 
 {
-    /* ALGORITMA */
-    ElmtPlayer *P = (ElmtPlayer *)malloc(sizeof(ElmtPlayer));
-    if (P != Nil) {
-        kodePlayer(P) = 0;
-        nextPlayer(P) = Nil;
-        FirstSkill(skill(P)) = Nil;
-        return P;
-    } else {
-        return Nil; 
-    }
-}
+    int currPosition;
+    int x;
 
-/*** Konstruktor Skill ***/
-void CreateListSkill (ListSkill *S)
-{
-    /* ALGORITMA */
-    FirstSkill(*S) = Nil;
-}
+    currPosition = (*P).contents[i].position;
+    
 
-address newSkill ()
-{
-    /* ALGORITMA */
-    ElmtSkill *P = (ElmtSkill *)malloc(sizeof(ElmtSkill));
-    if (P != Nil) {
-        skillName(P) = "";
-        nextSkill(P) = Nil;
-        return P;
-    } else {
-        return Nil;
-    }
-}
+    if (((currPosition + ndadu) <= Length(M)) && ((currPosition - ndadu) > 0)) {
+        if (M.contents[currPosition + ndadu] == "#") {
+            if (M.contents[currPosition - ndadu] == "#") {
+                
+                printf("1. Maju");
+                printf("2. Mundur");
+                printf("Pilih perintah yang kamu inginkan : ");
+                scanf("%d", &x);
 
-/****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address SearchPemain (Player P, infotype X)
-{/* Mencari apakah ada elemen list dengan info(P)= X */
-/* Jika ada, mengirimkan address elemen tersebut. */
-/* Jika tidak ada, mengirimkan Nil */
-    /* ALGORITMA */
-    boolean found;
-    address found_add, CP;
-    /* ALGORITMA */
-    found = false;
-    found_add = Nil;
-    CP = FirstPlayer(P);
-    if (!IsEmpty(P)) {
-        do {
-            if (Info(CP) == X) {
-                found = true;
-                found_add = CP;
+                if (x == 1) {
+                    currPosition = currPosition + ndadu;
+                    M.contents[currPosition] = "*";
+                } else {
+                    currPosition = currPosition - ndadu;
+                    M.contents[currPosition] = "*";
+                }
             } else {
-                CP = Next(CP);
+                currPosition = currPosition + ndadu;
+                M.contents[currPosition] = "*";
             }
-        } while ((CP != Nil) && !found);
+        } else {
+            if (M.contents[currPosition - ndadu] == "#") {
+                printf("Kamu tidak bisa kemana-mana.");
+
+            } else {
+                currPosition = currPosition - ndadu;
+                M.contents[currPosition] = "*";
+            } 
+        }
+        
+    } else {
+        printf("Kamu tidak bisa kemana-mana.");
     }
-    return found_add;
-}
-
-/*** Lain-lain ***/
-void UpdateSkill (ListSkill S, infotype X)
-{/* Menambahkan skill baru seorang pemain ke dalam ListSkill */
-    Player P;
-    SearchPemain(P, X);
-    nambahskill(L, r);
-}
-
-int NbSkill (ListSkill S, infotype X)
-{/* Mengirimkan banyaknya skill yang dimiliki oleh seorang pemain. */
-    address CP;
-    Player P;
-    /* ALGORITMA */
-    CP = SearchPemain (P, X);
-    NbElmt (skill);
-}
-
-void PrintSkill (ListSkill S, infotype X)
-{
-
-}
-
-void MovePlayer () 
-{
-
-}
-
-boolean isBuffEmpty (Buff B)
-{
-    return B.Neff = 0;
-}
-
-void CreateEmptyBuff (Buff *B)
-{
-    (*B).Neff = 0;
-}
-
-void PrintBuff (Buff B, infotype X)
-{
-
+    return currPosition; 
 }
