@@ -52,9 +52,7 @@ Player GetPlayer (status s, IdxType i);
 MAP getMapPlayer (status s, IdxType i);
 /* Prekondisi : status tidak kosong */
 /* Mengirimkan elemen tabel yang ke-i */
-Portal getPortalPlayer (status s, IdxType i);
-/* Prekondisi : status tidak kosong */
-/* Mengirimkan elemen tabel yang ke-i */
+
 
 /* *** Selektor SET : Mengubah nilai status dan elemen status *** */
 /* Untuk type private/limited private pada bahasa tertentu */
@@ -111,5 +109,7 @@ void map(status s);
 /*Command inspect*/
 void inspect(Portal P, MAP M, int petak);
 /* Melakukan pencetakan apakah petak yang di input memiliki telporter atau penghalang*/
+
+
 
 #endif
