@@ -157,4 +157,10 @@ void nambahskill (Listskill *L, int r);
 void buangskill (Listskill *L, int x);
 // Menghapus/memakai skill pada elemen ke x
 
+void printskill (Listskill L);
+// Mencetak skill apa saja yang dimiliki
+
+int lihatisi (Listskill L, infotype X);
+// Melihat isi node ke X
+
 #endif

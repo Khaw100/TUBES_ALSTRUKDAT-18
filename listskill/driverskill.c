@@ -4,10 +4,14 @@
 
 int main (){
     Listskill L;
+    int X;
     CreateEmpty(&L);
     nambahskill(&L, 2);
     nambahskill(&L, 4);
-    printf("\n");
-    buangskill(&L,1);
+    nambahskill(&L, 3);
     PrintForward(L);
+    printf("\n");
+    X = lihatisi(L, 1);
+    printf("%d", X);
+    // printskill(L);
 }

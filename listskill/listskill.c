@@ -378,3 +378,52 @@ void buangskill (Listskill *L, int x){
         DelI(L, x);
     }
 }    
+
+void printskill (Listskill L){
+    address CP;
+    if (IsEmpty(L)){
+        printf("Kamu belum memiliki skill apapun \n");
+    }    
+    else {    
+        int i = 1;
+        CP = First(L);
+        printf("Kamu memiliki skill: \n");
+        while (CP!=Nil) {
+            printf("%d. ", i);
+            if (Info(CP)==1){
+                printf("Pintu Ga Kemana-Mana\n");
+            }
+            else if (Info(CP)==2){
+                printf("Cermin Pengganda\n");
+            }   
+            else if (Info(CP)==3){
+                printf("Senter Pembesar Hoki\n");
+            }
+            else if (Info(CP)==4){
+                printf("Senter Pengecil Hoki\n");
+            }
+            else if (Info(CP)==5){
+                printf("Mesin Penukar Hoki\n");
+            }
+            CP = Next(CP);
+            i = i+1;
+        }
+        printf("Tekan 0 untuk keluar. Masukkan bilangan negatif untuk membuang skill.\n"); 
+    }
+}
+
+int lihatisi (Listskill L, infotype X){
+    address P;
+    if (X==1){
+        return (Info(First(L)));
+    }
+    else{
+        int i = 1;
+        P = First(L);
+        while (i<X){
+            P = Next(P);
+            i = i+1;
+        }
+        return Info(P);
+    }
+}
