@@ -147,7 +147,7 @@ int posisi(status s, IdxType i) {
 void map(status s){
 /*Melakukan pencetakan nama pemain, peta, dan posisi pemain*/
     for (int i = 1; i <= Length(s); i++){
-        printf("%s : %s %d", s.P.contents[i].playerName, s.contentsMapPlayer[i].contents, posisi(s,i));
+        printf("%s\t: %s\t%d \n", s.P.contents[i].playerName, s.contentsMapPlayer[i].contents, posisi(s,i));
     }
 }
 
