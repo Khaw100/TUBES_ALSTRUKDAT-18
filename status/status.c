@@ -106,6 +106,27 @@ void SetRonde (status *s, IdxType i){
     (*s).ronde = i;
 }
 
+void NextRonde (status *s){
+/* I.S. s terdefinisi, sembarang */
+/* F.S. Permainan berlanjut ke ronde berikutnya */
+    (*s).ronde += 1;
+
+}
+
+
+void UndoRonde (status *s){
+/* I.S. s terdefinisi, sembarang */
+/* F.S. ronde dikembalikan ke ronde sebelumnya*/
+/*Jika kondisi awal berada di ronde 1 maka ronde akan bernilai IdxUndef*/
+    if ((*s).ronde == 1){ //jika berada di ronde 1 maka undo akan menjadi IdxUndef
+        (*s).ronde = IdxUndef;
+    }
+    else{
+        (*s).ronde -= 1;
+    }
+
+}
+
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
 boolean IsEmptyTab (status s) {
@@ -147,7 +168,7 @@ int posisi(status s, IdxType i) {
 void map(status s){
 /*Melakukan pencetakan nama pemain, peta, dan posisi pemain*/
     for (int i = 1; i <= Length(s); i++){
-        printf("%s\t: %s\t%d \n", s.P.contents[i].playerName, s.contentsMapPlayer[i].contents, posisi(s,i));
+        printf("%s : %s %d", s.P.contents[i].playerName, s.contentsMapPlayer[i].contents, posisi(s,i));
     }
 }
 
