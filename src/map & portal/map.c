@@ -11,9 +11,6 @@ void createEmptyMap (MAP *M ){
     (*M).nEff = 0;
 }
 
-void loadMap (){
-    ;
-}
 
 void displayMap (MAP M){
     /*KAMUS LOKAL*/
@@ -26,15 +23,15 @@ void displayMap (MAP M){
     }
 }
 
-void copyMap (MAP M1, MAP M2){
+void copyMap (MAP *M1, MAP M2){
     /*KAMUS LOKAL*/
     int i;
 
     /*ALGORITMA*/
     i = 0;
     createEmptyMap(&M2);
-    for (i; i<=Length(M1);i++) {
-        M2.contents[i] = M1.contents[i];
+    for (i; i<=Length(*M1);i++) {
+        M2.contents[i] = (*M1).contents[i];
     }
 }
 
@@ -49,11 +46,13 @@ void createEmptyPortal (Portal *P) {
     (*P).Neff = 0;
 }
 
-void setPortal(Portal P, int n) {
-    /*KAMUS LOKAL*/
-    int i;
-    /*ALGORITMA*/
-    for(i=0;i<P.Neff+1;i++){
-        P.contents[i] = -1;
+
+Portal setPortal(Portal P, int n){
+    createEmptyPortal(&P);
+    P.Neff = n;
+    int j;
+    for(j=0;j<P.Neff;j++){
+        P.contents[j] = -1; 
     }
+    return P;
 }

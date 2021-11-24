@@ -7,6 +7,7 @@
 #include "map.h"
 
 #define IdxMax 4
+#define IdxUndef -999 /* indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType;
@@ -81,6 +82,17 @@ void SetRonde (status *s, IdxType i);
 /* I.S. s terdefinisi, sembarang */
 /* F.S. Nilai berupa ronde i yang sedang berlangsung */
 /* Mengeset nilai ronde sehingga bernilai i */
+
+void NextRonde (status *s);
+/* I.S. s terdefinisi, sembarang */
+/* F.S. Permainan berlanjut ke ronde berikutnya */
+
+
+void UndoRonde (status *s);
+/* I.S. s terdefinisi, sembarang */
+/* F.S. ronde dikembalikan ke ronde sebelumnya*/
+/*Jika kondisi awal berada di ronde 1 maka ronde akan bernilai IdxUndef*/
+
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
