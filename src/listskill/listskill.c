@@ -43,25 +43,6 @@ void Dealokasi (address P){
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
 
-/****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address Search (Listskill L, infotype X){
-    address P = First(L) ;
-    boolean found = false ;
-    if (IsEmpty(L)) {
-        return Nil ;
-    }
-    else {
-        while (P != Nil && Info(P) != X) {
-                P = Next(P) ;
-            }
-        }
-        return P ;
-}
-/* Mencari apakah ada elemen list dengan Info(P)=X */
-/* Jika ada, mengirimkan address elemen tersebut. */
-/* Jika tidak ada, mengirimkan Nil */
-
-/****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
 void InsVFirst (Listskill *L, infotype X){
     address P;
@@ -149,19 +130,6 @@ void InsertAfter (Listskill *L, address P, address Prec){
 }
 /* I.S. Prec pastilah elemen list; P sudah dialokasi  */
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
-void InsertBefore (Listskill *L, address P, address Succ){
-    if (Succ == First(*L)) {
-        InsertFirst(L, P) ;
-    }
-    else {
-        Next(Prev(Succ)) = P ;
-        Next(P) = Succ ;
-        Prev(P) = Prev(Succ) ;
-        Prev(Succ) = P ;
-    }
-}
-/* I.S. Succ pastilah elemen list; P sudah dialokasi  */
-/* F.S. Insert P sebagai elemen sebelum elemen beralamat Succ */
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
 void DelFirst (Listskill *L, address *P){
@@ -191,27 +159,6 @@ void DelLast (Listskill *L, address *P){
 /* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
 /* Last element baru adalah predesesor elemen pertama yg lama, jika ada */
-void DelP (Listskill *L, infotype X){
-    address P;
-    P = Search(*L, X);
-    if (P!=Nil){
-        if (Prev(P)!=Nil) {
-            DelAfter(L, P, Prev(P));
-        }
-        else if (Next(P)!=Nil){
-            DelBefore(L, P, Next(P));
-        }
-        else {
-            Last(*L)=Nil;
-            First(*L)=Nil;
-        }
-    }
-}
-/* I.S. Sembarang */
-/* F.S. Jika ada elemen list beraddress P, dengan Info(P)=X  */
-/* maka P dihapus dari list dan didealokasi */
-/* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
-/* List mungkin menjadi kosong karena penghapusan */
 void DelAfter (Listskill *L, address *Pdel, address Prec){
     *Pdel = Next(Prec);
     Next(Prec) = Next(*Pdel);
@@ -227,66 +174,6 @@ void DelAfter (Listskill *L, address *Pdel, address Prec){
 /* I.S. List tidak kosong. Prec adalah anggota list. */
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
-void DelBefore (Listskill *L, address *Pdel, address Succ){
-    *Pdel = Prev(Succ);
-    Prev(Succ) = Prev(*Pdel);
-    if (Prev(*Pdel)!=Nil){
-        Next(Prev(*Pdel)) = Succ;
-    }
-    else {
-        First(*L) = Succ;
-    }
-    Next(*Pdel) = Nil;
-    Prev(*Pdel) = Nil;
-}
-/* I.S. List tidak kosong. Succ adalah anggota list. */
-/* F.S. Menghapus Prev(Succ): */
-/*      Pdel adalah alamat elemen list yang dihapus  */
-
-/****************** PROSES SEMUA ELEMEN LIST ******************/
-void PrintForward (Listskill L){
-    address CP;
-    printf("[");
-    if (IsEmpty(L) == false){
-        CP = First(L);
-        do {
-            printf("%d", Info(CP));
-            CP = Next(CP);
-            if (CP!=Nil){
-                printf(",");
-            }
-        }while (CP!=Nil);
-    }
-    printf("]");
-}
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, isi list dicetak dari elemen pertama */
-/* ke elemen terakhir secara horizontal ke kanan: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika list kosong : menulis [] */
-/* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-void PrintBackward (Listskill L){
-    address CP;
-    printf("[");
-    if (IsEmpty(L) == false){
-        CP = Last(L);
-        do {
-            printf("%d", Info(CP));
-            CP = Prev(CP);
-            if (CP!=Nil){
-                printf(",");
-            }
-        }while (CP!=Nil);
-    }
-    printf("]");
-}
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, isi list dicetak dari elemen terakhir */
-/* ke elemen pertama secara horizontal ke kanan: [en,en-1,...,e2,e1] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [30,20,1] */
-/* Jika list kosong : menulis [] */
-/* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-
 
 
 int rskill (time_t t){ // 0-9
@@ -311,10 +198,10 @@ void DelI (Listskill *L, int n){
     int i;
     i = 0;
     if (n==1){
-        DelFirst(L, P);
+        DelFirst(L, &P);
     }
     else if (n==NbElmt(*L)){
-        DelLast(L, Last(*L));
+        DelLast(L, &Last(*L));
     }
     else {
         while (i<n){
@@ -322,58 +209,56 @@ void DelI (Listskill *L, int n){
             P = Next(P);
         }
         P = Prev(P);
-        DelAfter(L, P, Prev(P));
+        DelAfter(L, &P, Prev(P));
     }    
 }
 
-void nambahskill (Listskill *L, int r){ // r di sini diambil dari randomize
-    int skill;
+void nambahskill (Listskill *L, int r, boolean is_undo){ // r di sini diambil dari randomize
+    int skill1;
     if (r==0){
-        skill = 1; // id skill 1 : Pintu Ga Ke Mana-Mana
-        printf ("Pintu Ga Ke Mana-Mana \n");
+        skill1 = 1; // id skill 1 : Pintu Ga Ke Mana-Mana
+        printf ("Selamat Anda mendapatkan Pintu Ga Ke Mana-Mana \n");
     }
     else if (r==1){ 
-        skill = 2; // id skill 2 : Cermin Pengganda
-        printf ("Cermin Pengganda \n");
+        skill1 = 2; // id skill 2 : Cermin Pengganda
+        printf ("Selamat Anda mendapatkan Cermin Pengganda \n");
     }
     else if (r==2 || r==3){ 
-        skill = 3; // id skill 3 : Senter Pembesar Hoki
-        printf ("Senter Pembesar Hoki \n");
+        skill1 = 3; // id skill 3 : Senter Pembesar Hoki
+        printf ("Selamat Anda mendapatkan Senter Pembesar Hoki \n");
     }
     else if (r==4 || r==5){ 
-        skill = 4; // id skill 4 : Senter Pengecil Hoki
-        printf ("Senter Pengecil Hoki \n");
+        skill1 = 4; // id skill 4 : Senter Pengecil Hoki
+        printf ("Selamat Anda mendapatkan Senter Pengecil Hoki \n");
     }
     else if (r==6){ 
-        skill = 5; // id skill 5 : Mesin Penukar Hoki
-        printf ("Mesin Penukar Hoki \n");
+        skill1 = 5; // id skill 5 : Mesin Penukar Hoki
+        printf ("Selamat Anda mendapatkan Mesin Penukar Posisi \n");
     }  
     else if (r==7 || r==8 || r==9){ 
-        skill = 0; // skill 6 ga masuk ke list
-        printf("Teknologi Gagal \n");
+        skill1 = 0; // skill 6 ga masuk ke list
+        printf("Sayang sekali... Anda mendapatkan Teknologi Gagal \n");
+        if (is_undo == true && !(IsEmpty(*L))){
+            buangskill(L, Last(*L)->info);
+            is_undo = false;
+        }
     }    
 
     // harusnya udah dapet id skillnya
-
-    if (skill!=0 && NbElmt(*L)<=10){
-        InsVLast(L, skill);
-        printf("Skill ");
-        printf("%d", skill);
-        printf(" berhasil dimasukkan\n");
+    if (skill1!=0 && NbElmt(*L)<10){
+        InsVLast(L, skill1);
     } 
-    else if (skill==0){
-        printf("Sayang sekali Anda mendapatkan teknologi gagal :( \n");
-    }
-    else if (NbElmt(*L)>10){
+    else if (NbElmt(*L)>=10){
         printf("Jumlah skill yang dimiliki sudah mencapai maksimum\n");
     }
 }
 
 void buangskill (Listskill *L, int x){
     if (IsEmpty(*L)) {
-        printf("Anda tidak mempunyai skill \n");    
+        printf("Anda tidak mempunyai skill \n") ;    
     }
     else {
+
         x = abs(x);
         DelI(L, x);
     }
@@ -403,7 +288,7 @@ void printskill (Listskill L){
                 printf("Senter Pengecil Hoki\n");
             }
             else if (Info(CP)==5){
-                printf("Mesin Penukar Hoki\n");
+                printf("Mesin Penukar Posisi\n");
             }
             CP = Next(CP);
             i = i+1;

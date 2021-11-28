@@ -10,7 +10,7 @@ int main(){
     createEmptyMap(&M);
     M.nEffM = n;
     printf("Panjang efektif dari Map: %d\n", M.nEffM);
-    for (i = 0; i< M.nEffM; i++){
+    for (i = 1; i<= M.nEffM; i++){
         M.contents[i] = '.';
     }
     printf("Isi dari MAP: \n");

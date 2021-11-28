@@ -1,7 +1,7 @@
 #ifndef __MESIN_KAR_H_
 #define __MESIN_KAR_H_
 
-#include "boolean.h"
+#include "../boolean.h"
 #include "string.h"
 /* State Mesin */
 extern char CC;

@@ -3,12 +3,24 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create status kosong */
 void MakeEmpty (status *s){
 /* I.S. sembarang */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
+    MAP mp;
+    Portal pr;
+    ArrayP py;
+    int ronde;
+    createEmptyMap(&mp);
+    createEmptyPortal(&pr);
+    CreateEmptyPlayer(&py);
+    (*s).ronde = 1;
     (*s).Neff = 0;
+    (*s).Pl = py;
+    (*s).Por = pr;
+    (*s).contentsMapPlayer = mp;
 }
 
 int Nbstatus (status s){
@@ -24,72 +36,31 @@ int MaxElmt (status s){
     return IdxMax;
 }
 
-IdxType GetLastIdx (status s) {
-/* Prekondisi : status s tidak kosong */
-/* Mengirimkan indeks elemen terakhir */
-    return (s).Neff;
-}
-
-IdxType GetPlayerIdx (status s, Player P){
-/* Prekondisi : status s tidak kosong */
-/* Mengirimkan idx player P dalam array */
-/* *** Menghasilkan sebuah elemen *** */
-
-    // Kamus
-    int i = 0;
-
-    // Algoritma
-    while ((P.playerName) != (s.P.contents[i].playerName) && i < s.Neff)
-    {
-        i++;
-    }
-    // index status s ditemukan
-    return i;
-}
-
-/* *** Menghasilkan sebuah elemen *** */
-Player GetPlayer (status s, IdxType i) {
-/* Prekondisi : status tidak kosong */
-/* Mengirimkan elemen tabel yang ke-i */
-    return (s).P.contents[i];
-}
-
-MAP getMapPlayer (status s, IdxType i){
-/* Prekondisi : status tidak kosong */
-/* Mengirimkan elemen tabel yang ke-i */
-    return (s).contentsMapPlayer[i];
-}
-
 /* *** Selektor SET : Mengubah nilai status dan elemen status *** */
 /* Untuk type private/limited private pada bahasa tertentu */
 void Setstatus (status s, status *s_copy){
 /* I.S. s terdefinisi, sembarang */
 /* F.S. s_copy berisi salinan s*/
-    
-    for(int i = 1; i <= IdxMax; i++){
-        (*s_copy).P.contents[i] = s.P.contents[i];
+    int i;
+    for(i = 1; i <= IdxMax; i++){
+        (*s_copy).Pl.contents[i].position = s.Pl.contents[i].position;
+        (*s_copy).Pl.contents[i].skill = s.Pl.contents[i].skill;
+        (*s_copy).Pl.contents[i].playerBuff.isCerminPengganda = s.Pl.contents[i].playerBuff.isCerminPengganda;
+        (*s_copy).Pl.contents[i].playerBuff.isImun = s.Pl.contents[i].playerBuff.isImun;
+        (*s_copy).Pl.contents[i].playerBuff.isSenterPembesar = s.Pl.contents[i].playerBuff.isSenterPembesar;
+        (*s_copy).Pl.contents[i].playerBuff.isSenterPengecil = s.Pl.contents[i].playerBuff.isSenterPengecil;
     }
+    (*s_copy).ronde = s.ronde;
+    (*s_copy).Por = s.Por;
+    (*s_copy).Neff = s.Neff;
+    (*s_copy).contentsMapPlayer = s.contentsMapPlayer;
 }
 
 void SetPlayer (status *s, IdxType i, Player P){
 /* I.S. s terdefinisi, sembarang */
 /* F.S. Elemen s yang ke-i bernilai P */
 /* Mengeset nilai elemen status yang ke-i sehingga bernilai P */
-    (*s).P.contents[i] = P;
-}
-
-void SetMap (status *s, IdxType i, MAP M){
-/* I.S. s terdefinisi, sembarang */
-/* F.S. Elemen s yang ke-i bernilai M */
-/* Mengeset nilai elemen status yang ke-i sehingga bernilai M */
-    (*s).contentsMapPlayer[i] = M;
-}
-
-void SetPortal (status *s, IdxType i, Portal Por){
-/* I.S. s terdefinisi, sembarang */
-/* F.S. Elemen s yang ke-i bernilai Por */
-/* Mengeset nilai elemen status yang ke-i sehingga bernilai Por */
-    (*s).Por = Por;
+    (*s).Pl.contents[i] = P;
 }
 
 void SetNeff (status *s, IdxType i){
@@ -129,53 +100,46 @@ void UndoRonde (status *s){
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
-boolean IsEmptyTab (status s) {
-/* Mengirimkan true jika status s kosong, mengirimkan false jika tidak */
-    return (NbPlayer(s)==0);
-}
-/* *** Test tabel penuh *** */
-boolean IsFull (status s) {
-/* Mengirimkan true jika status s penuh, mengirimkan false jika tidak */
-    return (NbPlayer(s)==MaxNbEl(s));
-}
 
 /* ********** TEST Teleporter & Penghalang ********** */
 /* Test Teleporter*/
-boolean isTeleporter(status s, int rollDadu){ 
-/* Mengirimkan true jika ada teleporter, dan false jika tidak*/
-    return (s.Por.contents[rollDadu] != -1);
-}
+// boolean isTeleporter(status s, int rollDadu){ 
+// /* Mengirimkan true jika ada teleporter, dan false jika tidak*/
+//     return (s.Por.contents[rollDadu] != -1);
+// }
 
-/*Test Penghalang*/
-boolean isPenghalang(status s, int rollDadu, IdxType i){
-/* Mengirimkan true jika ada penghalang, dan false jika tidak*/
-    return (s.contentsMapPlayer[i].contents[rollDadu] == '#');
-}
+// /*Test Penghalang*/
+// boolean isPenghalang(status s, int rollDadu, IdxType i){
+// /* Mengirimkan true jika ada penghalang, dan false jika tidak*/
+//     return (s.contentsMapPlayer[i].contents[rollDadu] == '#');
+// }
 
 /* Posisi pemain */
 /*Mengembalikan posisi pemain ditandai dengan tanda (*) pada MAP*/
-int posisi(status s, IdxType i) { 
-    char nilai_posisi = '*';
-    for (int j = 1; j<= Length(s); j++){
-        if(s.contentsMapPlayer[i].contents[j] == nilai_posisi){
-            return j;
-        }
-    }
-}
+// int posisi(status s, IdxType i) { 
+//     char nilai_posisi = '*';
+//     int j;
+//     for (j = 1; j<= Length(s); j++){
+//         if(s.contentsMapPlayer[i].contents[j] == nilai_posisi){
+//             return j;
+//         }
+//     }
+// }
 
 /* Implementasi command map & inspect*/
 /*Command MAP */
-void map(status s){
-/*Melakukan pencetakan nama pemain, peta, dan posisi pemain*/
-    for (int i = 1; i <= Length(s); i++){
-        printf("%s : %s %d", s.P.contents[i].playerName, s.contentsMapPlayer[i].contents, posisi(s,i));
-    }
-}
+// void map(status s){
+// /*Melakukan pencetakan nama pemain, peta, dan posisi pemain*/
+//     int i;
+//     for (i = 1; i <= Length(s); i++){
+//         printf("%s : %s %d", s.P.contents[i].playerName, s.contentsMapPlayer[i].contents, posisi(s,i));
+//     }
+// }
 
 /*Command inspect*/
 void inspect(Portal P, MAP M, int petak){
 /* Melakukan pencetakan apakah petak yang di input memiliki telporter atau penghalang*/
-    scanf("Masukkan petak: %d\n", &petak);
+
 
     // petak memiliki teleporter
     if (P.contents[petak] != -1){ // -1 menunjukkan petak tidak memiliki teleporter

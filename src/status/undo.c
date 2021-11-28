@@ -1,21 +1,22 @@
+#include <stdio.h>
 #include "undo.h"
-#include "status.c"
 
 
 void CreateEmpty (Stack *S){
-    Top(*S) = Nil;
+    Top(*S) = Nill;
 }
 
-boolean IsEmpty (Stack S){
-    return (Top(S) ==  Nil);
+boolean IsEmptyS (Stack S){
+    return (Top(S) ==  Nill);
 }
-boolean IsFull (Stack S){
-    return (Top(S)== MaxEl);
-}
+
 
 void Push (Stack * S, infotipe X){
+    status stat;
+    MakeEmpty(&stat);
+    Setstatus(X, &stat);
     Top(*S) += 1;
-    InfoTop(*S) = X;
+    InfoTop(*S) = stat;
 }
 
 void Pop (Stack * S, infotipe* X){

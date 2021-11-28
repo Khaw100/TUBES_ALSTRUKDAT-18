@@ -1,5 +1,6 @@
-
 #include "map.h"
+#include "../mesin_kar_mesin_kata/mesin_kar.h"
+#include "../mesin_kar_mesin_kata/mesin_kata.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

@@ -2,7 +2,7 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "boolean.h"
+#include "../boolean.h"
 #include <time.h>
 
 /*Ukuran panjang maksimum peta*/

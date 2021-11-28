@@ -6,6 +6,7 @@ int main(){
     char input[100] = "test.txt";
     STARTKATA(input);
     PrintKata(CKata);
+    printf("\n");
     ADVKATA();
     PrintKata(CKata);
 }
