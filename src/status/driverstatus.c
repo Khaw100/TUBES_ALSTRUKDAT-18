@@ -40,7 +40,7 @@ int main(){
     // Tes SetPlayer
     ArrayP Pl;
     Player P;
-    P.playerName[50] = "Pemain 1";
+    P.playerName[0] = 'A';
     SetPlayer(&S, 1, P);
     if ((S).Pl.contents[1].playerName[50] == P.playerName[50]){
         printf("Tes SetPlayer Berhasil \n");
