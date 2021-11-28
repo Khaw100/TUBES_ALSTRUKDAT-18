@@ -3,7 +3,7 @@
 #define MAP_H
 
 #include "boolean.h"
-
+#include <time.h>
 
 /*Ukuran panjang maksimum peta*/
 #define MAX_Length 100
@@ -12,7 +12,7 @@ typedef char ElTypeMap;
 typedef int ElTypePortal;
 typedef struct {
     ElTypeMap contents [MAX_Length];
-    int nEff;
+    int nEffM;
 } MAP;
 typedef struct {
     ElTypePortal contents [MAX_Length];
@@ -20,7 +20,7 @@ typedef struct {
 } Portal;
 
 /* SELEKTOR MAP */
-#define Length(M) (M).nEff
+// #define Length(M) (M).nEffM
 
 
 boolean IsPortalEmpty (Portal P);
@@ -33,13 +33,9 @@ void createEmptyMap (MAP *M);
 /* I.S. Sebuah array map M terdefinisi*/
 /* F.S. Sebuah array map M dengan ukuran nEff = 0 terbentuk*/
 
-void displayMap (MAP M);
+void displayMap (MAP M, int posisi);
 /* I.S. Sebuah MAP M terdefinisi*/
 /* F.S. Nilai dari array Map M ditulis ke layar */
-
-void copyMap (MAP *M1, MAP M2);
-/* I.S. Sebuah MAP M1 terdefinisi*/
-/* F.S. Sebuah MAP M2 akan terisi sama elemennya seperti MAP M1*/
 
 void createEmptyPortal (Portal *P);
 /* I.S. Sebuah nilai n valid untuk memori MAP*/ 
@@ -48,4 +44,8 @@ void createEmptyPortal (Portal *P);
 Portal setPortal(Portal P, int n);
 /* I.S Sebuah portal terdefinisi*/
 /* F.S. Portal P dengan Neff n akan terisi dengan -1 */
+
+int roll (time_t y, int maksdadu);
+/* Untuk merandom dadu */
+
 #endif
