@@ -14,9 +14,9 @@ Command untuk mengcompile:
 3. drivermesin
  gcc driver_mesin.c mesin_kata.c mesin_kar.c -o drivermesin
 4. driverplayer
- gcc player.c driverplayer.c ../map_portal/map.c ../listskill/listskill.c -o driverplaye
+ gcc player.c driverplayer.c ..\map_portal\map.c ..\listskill\listskill.c -o driverplayer
 5. driverstatus
- gcc status.c driverstatus.c ..\listskill\listskill.c ..\player\player.c  ..\map_portal\map.c -o driverstatu
+ gcc status.c driverstatus.c ..\listskill\listskill.c ..\player\player.c  ..\map_portal\map.c -o driverstatus
 6. driverundo
  gcc status.c undo.c  driverundo.c ..\listskill\listskill.c ..\player\player.c  ..\map_portal\map.c -o driverundo
 7. main
